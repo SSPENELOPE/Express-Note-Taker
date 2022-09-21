@@ -2,6 +2,7 @@ const express = require('express');
 /* const { fstat } = require('fs'); */
 const fs = require('fs');
 const path = require('path');
+const db = require('./db/db.json');
 const PORT = process.env.PORT || 3001;
 
 const app = express();
@@ -15,17 +16,20 @@ app.get('/', (req, res) =>
 
 app.get('/notes', (req, res) =>
     res.sendFile(path.join(__dirname, '/public/notes.html'))
-   /*  console.log(res) */
 );
 
-app.get('/api/notes', (req, res) =>
-    fs.readFile('/db/db.json').then((data) => res.json(JSON.parse(data)))
- 
+app.get('/api/notes', (req, res) => 
+    /* fs.readFile('./db/db.json').then((data) => res.json(JSON.parse(data))) */
+    fs.readFile('/db/db.json', 'utf8', function(err, data){
+        res.json(JSON.parse(data))
+   })
 );
 
-/* app.post('/api/notes', (req, res) => {
-    // readAndAppend(notes,)   .('./db/db.json')
-}) */
+app.post('/api/notes', (req, res) => 
+    fs.writeFile('/db/db.json', 'utf8', function(err, data){
+        req.json(JSON.parse(data))
+})
+)
 
 
 app.listen(PORT, () => console.log(`App Listening on http://localhost:${PORT} `))
