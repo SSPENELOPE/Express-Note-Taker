@@ -19,15 +19,14 @@ app.get('/notes', (req, res) =>
 );
 
 app.get('/api/notes', (req, res) => 
-    /* fs.readFile('./db/db.json').then((data) => res.json(JSON.parse(data))) */
     fs.readFile('/db/db.json', 'utf8', function(err, data){
-        res.json(JSON.parse(data))
+        res.json(JSON.parse(data));
    })
 );
 
 app.post('/api/notes', (req, res) => 
     fs.writeFile('/db/db.json', 'utf8', function(err, data){
-        req.json(JSON.parse(data))
+        res.json(JSON.stringify(data));
 })
 )
 
