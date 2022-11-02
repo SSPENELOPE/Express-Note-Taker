@@ -34,7 +34,10 @@ app.get('/notes', (req, res) =>
 
 // Writes Notes to the JSON File
 app.post('/api/notes', function (req,res) {
+    let letter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+    let id = letter + Date.now();
     let note = {
+        id: id,
         title: req.body.title,
         text: req.body.text,
     };
