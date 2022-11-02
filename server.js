@@ -6,7 +6,7 @@ const notes = require('./db/db.json');
 
 const app = express();
 
-app.use(express.static(__dirname + 'public'));
+app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -56,3 +56,4 @@ app.post('/api/notes', function (req,res) {
 
 // Tells the application to listen on the designated port
 app.listen(PORT, () => console.log(`APP LISTENING ON localhost:${PORT}`));
+// Adding this for heroku
