@@ -1,4 +1,4 @@
-# Express Note Taker4
+# Express Note Taker
 
 # What is this?
 - This is a note taking application built using express.js to connect a front end and backend application to create and store data
