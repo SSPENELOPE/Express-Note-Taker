@@ -28,12 +28,25 @@ app.get('/notes', (req, res) =>
    })
 );
 
-app.post('/api/notes', (req, res) => 
-    fs.appendFile('/db/db.json', 'utf8', function(err, data){
-        console.log(data)
-        res.json(JSON.stringify(data));
-})
-)
+app.post('/api/notes', function (req,res) {
+    let letter = String.fromCharCode(65 + Math.floor(Math.random() * 26))
+    let id = letter + Date.now();
+    let note = {
+        id: id,
+        title: req.body.title,
+        text: req.body.text,
+    };
+    notes.push(note);
+    let noted = JSON.stringify(notes);
+    res.json(notes);
 
+    fs.writeFile('db/db.json', noted, (err) => {
+        if(err) {
+            console.log(err)
+        } else {
+            console.log('Note Saved');
+        };
+    });
+});
 
-app.listen(PORT, () => console.log(`App Listening on http://localhost:${PORT} `))
+app.listen(PORT, () => console.log(`APP LISTENING ON localhost:${PORT}`));
