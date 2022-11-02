@@ -10,16 +10,19 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Retrieves Homepage
 app.get('/', (req, res) =>
     res.sendFile(path.join(__dirname, '/public/index.html'))
 );
 
+// Retrieves Notes Page
 app.get('/notes', (req, res) =>
     res.sendFile(path.join(__dirname, '/public/notes.html'))
 );
 
+// Retrieves Pre-existing Notes
  app.get('/api/notes', (req, res) => 
-    fs.readFile('/db/db.json', 'utf8', function(err, data){
+    fs.readFile('./db/db.json', 'utf8', function(err, data){
         if(err) {
             console.log(err);
             return;
@@ -29,11 +32,9 @@ app.get('/notes', (req, res) =>
    })
 );
 
+// Writes Notes to the JSON File
 app.post('/api/notes', function (req,res) {
-    let letter = String.fromCharCode(65 + Math.floor(Math.random() * 26))
-    let id = letter + Date.now();
     let note = {
-        id: id,
         title: req.body.title,
         text: req.body.text,
     };
@@ -50,4 +51,5 @@ app.post('/api/notes', function (req,res) {
     });
 });
 
+// Tells the application to listen on the designated port
 app.listen(PORT, () => console.log(`APP LISTENING ON localhost:${PORT}`));
